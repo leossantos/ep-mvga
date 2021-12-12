@@ -87,7 +87,7 @@ class Matriz {
         for (int j = 0; j < this.col; j++) {
             double aux = this.get(i1, j);
             this.set(i1, j, this.get(i2, j));
-            this.set(i2, j, aux);
+            this.set(i2, j, aux*-1);
         }
         // TODO: implementar este metodo.
     }
@@ -118,7 +118,7 @@ class Matriz {
     // esteja o mais a esquerda possivel dentre todas as linhas. Os indices da linha e da
     // coluna referentes a entrada nao nula encontrada sao devolvidos como retorno do metodo.
     // Este metodo ja esta pronto para voces usarem na implementacao da eliminacao gaussiana
-    // e eleminacao de Gauss-Jordan.
+    // e eliminacao de Gauss-Jordan.
 
     private int [] encontraLinhaPivo(int ini){
 
@@ -150,10 +150,34 @@ class Matriz {
     // que a matriz que invoca este metodo eh uma matriz quadrada.
 
     public double formaEscalonada(Matriz agregada){
-
+        for (int i = 0; i < this.lin-1; i++) {
+            int[] cord_pivo = this.encontraLinhaPivo(i);
+            int pivo_lin = cord_pivo[0];
+            int pivo_col = cord_pivo[1];
+            if (pivo_lin != i){
+                this.trocaLinha(i, pivo_lin);
+                agregada.trocaLinha(i,pivo_lin);
+                cord_pivo = this.encontraLinhaPivo(i);
+                pivo_lin = cord_pivo[0];
+                pivo_col = cord_pivo[1];
+            }
+            double pivo = this.get(pivo_lin, pivo_col);
+            for (int j = 1; j < this.lin-i; j++) {
+                double embaixo_pivo = this.m[pivo_lin+j][pivo_col];
+                double k = -embaixo_pivo/pivo;
+                this.combinaLinhas(pivo_lin+j, pivo_lin, k);
+                agregada.combinaLinhas(pivo_lin+j, pivo_lin, k);
+            }
+        }
+        System.out.println("_____________________________");
+        this.imprime(agregada);
+        double determinante = 1;
+        for (int i = 0; i < this.lin; i++) {
+            determinante *= this.m[i][i];
+        }
         // TODO: implementar este metodo.
 
-        return 0.0;
+        return determinante;
     }
 
     // metodo que implementa a eliminacao de Gauss-Jordan, que coloca a matriz (que chama o metodo)
