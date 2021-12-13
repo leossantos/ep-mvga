@@ -169,8 +169,8 @@ class Matriz {
                 agregada.combinaLinhas(pivo_lin+j, pivo_lin, k);
             }
         }
-        System.out.println("_____________________________");
-        this.imprime(agregada);
+//        System.out.println("_____________________________");
+//        this.imprime(agregada);
         double determinante = 1;
         for (int i = 0; i < this.lin; i++) {
             determinante *= this.m[i][i];
@@ -187,6 +187,45 @@ class Matriz {
     // matriz ja esteja na forma escalonada (mas voce pode usar o metodo acima para isso).
 
     public void formaEscalonadaReduzida(Matriz agregada){
+        double det = this.formaEscalonada(agregada);
+        for (int i = this.lin-1; i > 0 ; i--) {
+            int[] cord_pivo = this.encontraLinhaPivo(i);
+            int pivo_lin = cord_pivo[0];
+            int pivo_col = cord_pivo[1];
+            if (pivo_lin != i){
+                this.trocaLinha(i, pivo_lin);
+                agregada.trocaLinha(i,pivo_lin);
+                cord_pivo = this.encontraLinhaPivo(i);
+                pivo_lin = cord_pivo[0];
+                pivo_col = cord_pivo[1];
+            }
+            double pivo = this.get(pivo_lin, pivo_col);
+            for (int j = 1; j <= i; j++) {
+                double acima_pivo = this.m[pivo_lin-j][pivo_col];
+                double k = -acima_pivo/pivo;
+                this.combinaLinhas(pivo_lin-j, pivo_lin, k);
+                agregada.combinaLinhas(pivo_lin-j, pivo_lin, k);
+            }
+//            this.imprime(agregada);
+        }
+//        System.out.println("-----------------------");
+        for (int i = 0; i < this.lin; i++) {
+            double coeficiente = agregada.get(i, i);
+            double k = 1/coeficiente;
+            agregada.multiplicaLinha(i, k);
+            this.multiplicaLinha(i, k);
+        }
+//        this.imprime(agregada);
+
+        Matriz resultado = new Matriz(this.lin, agregada.col-this.col);
+
+        for (int i = 0; i < resultado.lin; i++) {
+            for (int j = 0; j < resultado.col; j++) {
+                double aux = agregada.get(i, j+this.col);
+                resultado.set(i, j, aux);
+            }
+        }
+        resultado.imprime();
 
         // TODO: implementar este metodo.
     }
