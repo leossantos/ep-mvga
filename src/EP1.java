@@ -1,5 +1,7 @@
 // Classe "executavel".
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class EP1 {
@@ -33,7 +35,10 @@ public class EP1 {
             Matriz matriz = matrizes[0];
             Matriz agregada = matrizes[1];
             double determinante = matriz.formaEscalonada(agregada);
-            System.out.println(determinante);
+            String pattern = "#.#######";
+            DecimalFormat decimalFormat =  new DecimalFormat(pattern);
+            decimalFormat.setRoundingMode(RoundingMode.HALF_EVEN);
+            System.out.println(decimalFormat.format(determinante));
 
         } else {
             System.out.println("Operação desconhecida!");
@@ -46,10 +51,10 @@ public class EP1 {
         Matriz agregada = new Matriz(n, col_agregada);
         Matriz identidade = Matriz.identidade(n);
         for (int i = 0; i < n; i++) {
-            String[] line = in.nextLine().split(" ");
+            String[] line = in.nextLine().trim().split(" +");
             double resul = 0;
             for (int j = 0; j < n; j++) {
-                double aux = Double.parseDouble(line[j]);
+                double aux = Double.parseDouble(line[j].trim());
                 resul += aux;
                 matriz.set(i, j, aux);
                 agregada.set(i, j, aux);

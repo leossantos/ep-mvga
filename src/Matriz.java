@@ -183,11 +183,28 @@ class Matriz {
 
     public void formaEscalonadaReduzida(Matriz agregada){
         double det = this.formaEscalonada(agregada);
+        if (agregada.col == this.col*2 & det == 0) {
+            System.out.println("matriz singular");
+            return;
+        }
         for (int i = this.lin-1; i > 0 ; i--) {
+//            this.imprime(agregada);
             int[] cord_pivo = this.encontraLinhaPivo(i);
             int pivo_lin = cord_pivo[0];
             int pivo_col = cord_pivo[1];
+            if (pivo_lin == this.lin){
+                double soma = 0;
+                for (int j = 0; j < this.col; j++) {
+                    soma += this.get(i, j);
+                }
+                if (soma == 0 & agregada.get(i, this.col) == 0  )
+                    System.out.println("sistema possui diversas soluções");
+                else
+                    System.out.println("sistema sem solução");
+                return;
+            }
             if (pivo_lin != i){
+                System.out.println(i+ " " + pivo_lin);
                 this.trocaLinha(i, pivo_lin);
                 agregada.trocaLinha(i,pivo_lin);
                 cord_pivo = this.encontraLinhaPivo(i);
