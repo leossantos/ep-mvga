@@ -89,7 +89,6 @@ class Matriz {
             this.set(i1, j, this.get(i2, j));
             this.set(i2, j, aux*-1);
         }
-        // TODO: implementar este metodo.
     }
 
     // metodo que multiplica as entradas da linha i pelo escalar k
@@ -98,7 +97,6 @@ class Matriz {
         for (int j = 0; j < this.col; j++) {
             this.set(i, j, this.get(i, j)*k);
         }
-        // TODO: implementar este metodo.
     }
 
     // metodo que faz a seguinte combinacao de duas linhas da matriz:
@@ -111,7 +109,6 @@ class Matriz {
             double aux = this.get(i1, j) + this.get(i2, j)*k;
             this.set(i1, j, aux);
         }
-        // TODO: implementar este metodo.
     }
 
     // metodo que procura, a partir da linha ini, a linha com uma entrada nao nula que
@@ -175,8 +172,6 @@ class Matriz {
         for (int i = 0; i < this.lin; i++) {
             determinante *= this.m[i][i];
         }
-        // TODO: implementar este metodo.
-
         return determinante;
     }
 
@@ -226,7 +221,5 @@ class Matriz {
             }
         }
         resultado.imprime();
-
-        // TODO: implementar este metodo.
     }
 }
