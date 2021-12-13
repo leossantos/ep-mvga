@@ -14,19 +14,22 @@ public class EP1 {
         in.nextLine();
 
         if ("resolve".equals(operacao)) {
-            Matriz[] matrizes = read_matrix(in, n, operacao);
+            int col_agregada = n+1;
+            Matriz[] matrizes = read_matrix(in, n, operacao, col_agregada);
             Matriz matriz = matrizes[0];
             Matriz agregada = matrizes[1];
             matriz.formaEscalonadaReduzida(agregada);
 
         } else if ("inverte".equals(operacao)) {
-            Matriz[] matrizes = read_matrix(in, n, operacao);
+            int col_agregada = n*2;
+            Matriz[] matrizes = read_matrix(in, n, operacao, col_agregada);
             Matriz matriz = matrizes[0];
             Matriz agregada = matrizes[1];
             matriz.formaEscalonadaReduzida(agregada);
 
         } else if ("determinante".equals(operacao)) {
-            Matriz[] matrizes = read_matrix(in, n, operacao);
+            int col_agregada = n+1;
+            Matriz[] matrizes = read_matrix(in, n, operacao, col_agregada);
             Matriz matriz = matrizes[0];
             Matriz agregada = matrizes[1];
             double determinante = matriz.formaEscalonada(agregada);
@@ -38,18 +41,10 @@ public class EP1 {
         }
     }
 
-    private static Matriz[] read_matrix(Scanner in, int n, String operacao) {
-        Matriz matriz;
-        Matriz agregada;
+    private static Matriz[] read_matrix(Scanner in, int n, String operacao, int col_agregada) {
+        Matriz matriz= new Matriz(n, n);
+        Matriz agregada = new Matriz(n, col_agregada);
         Matriz identidade = Matriz.identidade(n);
-        if (operacao.equals("inverte")){
-            matriz = new Matriz(n, n);
-            agregada = new Matriz(n, n * 2);
-        }
-        else {
-            matriz = new Matriz(n, n);
-            agregada = new Matriz(n, n + 1);
-        }
         for (int i = 0; i < n; i++) {
             String[] line = in.nextLine().split(" ");
             double resul = 0;
@@ -65,12 +60,8 @@ public class EP1 {
                     agregada.set(i, j, aux);
                 }
             }
-            else{
-                double aux;
-                if (operacao.equals("resolve")) aux = Double.parseDouble(line[n]);
-                else aux = resul;
-                agregada.set(i, n, aux);
-            }
+            else if (operacao.equals("resolve")) agregada.set(i, n, Double.parseDouble(line[n]));
+            else agregada.set(i, n, resul);
         }
 //        matriz.imprime(agregada);
 
