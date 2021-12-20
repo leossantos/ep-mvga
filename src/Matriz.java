@@ -1,3 +1,8 @@
+/*
+Nome: Leonardo Soares Santos NUSP: 10284782
+Nome: Vitória Regina Pinto dos Santos NUSP: 10257343
+ */
+
 import java.util.*;
 
 // classe que representa uma matriz de valores do tipo double.
