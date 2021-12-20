@@ -95,7 +95,11 @@ class Matriz {
 
     private void multiplicaLinha(int i, double k){
         for (int j = 0; j < this.col; j++) {
-            this.set(i, j, this.get(i, j)*k);
+            double aux = this.get(i, j)*k;
+            if (Math.abs(aux) < SMALL){
+                aux = 0;
+            }
+            this.set(i, j, aux);
         }
     }
 
@@ -107,6 +111,9 @@ class Matriz {
     private void combinaLinhas(int i1, int i2, double k){
         for (int j = 0; j < this.col; j++) {
             double aux = this.get(i1, j) + this.get(i2, j)*k;
+            if (Math.abs(aux) < SMALL){
+                aux = 0;
+            }
             this.set(i1, j, aux);
         }
     }
@@ -159,13 +166,18 @@ class Matriz {
                 pivo_col = cord_pivo[1];
             }
             double pivo = this.get(pivo_lin, pivo_col);
+//            System.out.println("pivo_lin "+ pivo_lin + " pivo_col "+ pivo_col);
+//            System.out.println(pivo);
             for (int j = 1; j < this.lin-i; j++) {
                 double embaixo_pivo = this.m[pivo_lin+j][pivo_col];
                 double k = -embaixo_pivo/pivo;
                 this.combinaLinhas(pivo_lin+j, pivo_lin, k);
                 agregada.combinaLinhas(pivo_lin+j, pivo_lin, k);
             }
+//            System.out.println("_____________________________");
+//            this.imprime(agregada);
         }
+//
 //        System.out.println("_____________________________");
 //        this.imprime(agregada);
         double determinante = 1;

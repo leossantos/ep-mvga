@@ -35,10 +35,7 @@ public class EP1 {
             Matriz matriz = matrizes[0];
             Matriz agregada = matrizes[1];
             double determinante = matriz.formaEscalonada(agregada);
-            String pattern = "#.#######";
-            DecimalFormat decimalFormat =  new DecimalFormat(pattern);
-            decimalFormat.setRoundingMode(RoundingMode.HALF_EVEN);
-            System.out.println(decimalFormat.format(determinante));
+            System.out.printf("%7.2f\n", determinante);
 
         } else {
             System.out.println("Operação desconhecida!");
